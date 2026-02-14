@@ -185,6 +185,18 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         python -m ensurepip --upgrade
         python -m pip install --upgrade pip
 
+        echo "Checking FaceID dependencies..."
+
+        python -c "import insightface" 2>/dev/null || (
+        echo "Installing FaceID stack..."
+        pip install --upgrade pip
+        pip install \
+            insightface==0.7.3 \
+            onnxruntime-gpu==1.16.3 \
+            opencv-python-headless
+        )
+
+
         # Update ComfyUI dependencies (frontend, etc.)
         echo "Installing ComfyUI requirements..."
         pip install -r "$COMFYUI_DIR/requirements.txt"
