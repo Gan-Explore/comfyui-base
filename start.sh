@@ -270,22 +270,4 @@ else
 fi
 
 # Start ComfyUI with custom arguments if provided
-cd $COMFYUI_DIR
-FIXED_ARGS="--listen 0.0.0.0 --port 8188"
 
-if [ -s "$ARGS_FILE" ]; then
-    CUSTOM_ARGS=$(grep -v '^#' "$ARGS_FILE" | tr '\n' ' ')
-    if [ ! -z "$CUSTOM_ARGS" ]; then
-        echo "Starting ComfyUI with additional arguments: $CUSTOM_ARGS"
-        python main.py $FIXED_ARGS $CUSTOM_ARGS
-    else
-        echo "Starting ComfyUI with default arguments"
-        python main.py $FIXED_ARGS
-    fi
-else
-    echo "Starting ComfyUI with default arguments"
-    python main.py $FIXED_ARGS
-fi
-
-# Tail the log file
-tail -f /workspace/runpod-slim/comfyui.log
